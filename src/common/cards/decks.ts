@@ -2,26 +2,21 @@ import PlayingCard, { Rank, Suit } from './PlayingCard';
 import PlayingCardPile from './PlayingCardPile';
 
 export function StandardDeck({
-  suits = [
-    PlayingCard.CLUBS,
-    PlayingCard.HEARTS,
-    PlayingCard.SPADES,
-    PlayingCard.DIAMONDS,
-  ],
+  suits = ['clubs', 'hearts', 'spades', 'diamonds'],
   ranks = [
-    PlayingCard.ACE,
-    PlayingCard.TWO,
-    PlayingCard.THREE,
-    PlayingCard.FOUR,
-    PlayingCard.FIVE,
-    PlayingCard.SIX,
-    PlayingCard.SEVEN,
-    PlayingCard.EIGHT,
-    PlayingCard.NINE,
-    PlayingCard.TEN,
-    PlayingCard.JACK,
-    PlayingCard.QUEEN,
-    PlayingCard.KING,
+    'ace',
+    'two',
+    'three',
+    'four',
+    'five',
+    'six',
+    'seven',
+    'eight',
+    'nine',
+    'ten',
+    'jack',
+    'queen',
+    'king',
   ],
   jokers = 0,
 }: {
@@ -38,7 +33,7 @@ export function StandardDeck({
   });
 
   for (let i = 0; i < jokers; i++) {
-    deck.cards.push(new PlayingCard(PlayingCard.JOKER));
+    deck.cards.push(new PlayingCard('joker'));
   }
 
   return deck;
@@ -46,13 +41,6 @@ export function StandardDeck({
 
 export function EuchreDeck() {
   return StandardDeck({
-    ranks: [
-      PlayingCard.NINE,
-      PlayingCard.TEN,
-      PlayingCard.JACK,
-      PlayingCard.QUEEN,
-      PlayingCard.KING,
-      PlayingCard.ACE,
-    ],
+    ranks: ['nine', 'ten', 'jack', 'queen', 'king', 'ace'],
   });
 }

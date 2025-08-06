@@ -24,12 +24,7 @@ export default class PlayingCardPile {
 
   sort({
     aces = 'low',
-    suitOrder = [
-      PlayingCard.CLUBS,
-      PlayingCard.HEARTS,
-      PlayingCard.SPADES,
-      PlayingCard.DIAMONDS,
-    ],
+    suitOrder = ['clubs', 'hearts', 'spades', 'diamonds'],
     jokers = 'last',
   } = {}) {
     this.cards.sort((a, b) => {
@@ -56,7 +51,7 @@ export default class PlayingCardPile {
         return aces === 'high' ? -1 : 1;
       }
 
-      return a.rank.value - b.rank.value;
+      return a.value - b.value;
     });
   }
 

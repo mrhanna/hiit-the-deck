@@ -1,17 +1,47 @@
 export type Suit = 'clubs' | 'hearts' | 'spades' | 'diamonds' | 'joker';
 
-export interface Rank {
-  name: string;
-  char: string;
-  value: number;
-}
+const RANKS = [
+  'ace',
+  'two',
+  'three',
+  'four',
+  'five',
+  'six',
+  'seven',
+  'eight',
+  'nine',
+  'ten',
+  'jack',
+  'queen',
+  'king',
+  'joker',
+] as const;
+
+export type Rank = (typeof RANKS)[number];
+
+const RANK_MAP: Record<Rank, { abbreviation: string; value: number }> = {
+  ace: { abbreviation: 'A', value: 1 },
+  two: { abbreviation: '2', value: 2 },
+  three: { abbreviation: '3', value: 3 },
+  four: { abbreviation: '4', value: 4 },
+  five: { abbreviation: '5', value: 5 },
+  six: { abbreviation: '6', value: 6 },
+  seven: { abbreviation: '7', value: 7 },
+  eight: { abbreviation: '8', value: 8 },
+  nine: { abbreviation: '9', value: 9 },
+  ten: { abbreviation: 'T', value: 10 },
+  jack: { abbreviation: 'J', value: 11 },
+  queen: { abbreviation: 'Q', value: 12 },
+  king: { abbreviation: 'K', value: 13 },
+  joker: { abbreviation: 'Jo', value: 14 },
+};
 
 export default class PlayingCard {
   private _rank: Rank;
   private _suit: Suit;
 
   constructor(rank: Rank, suit?: Suit) {
-    if (!suit && rank !== PlayingCard.JOKER) {
+    if (!suit && rank !== 'joker') {
       throw new Error('Suit must be specified unless rank is Joker');
     }
 
@@ -22,7 +52,7 @@ export default class PlayingCard {
   set rank(rank: Rank) {
     this._rank = rank;
 
-    if (rank === PlayingCard.JOKER) {
+    if (rank === 'joker') {
       this._suit = 'joker';
     }
   }
@@ -32,7 +62,7 @@ export default class PlayingCard {
   }
 
   set suit(suit: Suit) {
-    if (this._rank === PlayingCard.JOKER) {
+    if (this._rank === 'joker') {
       this._suit = 'joker';
     } else {
       this._suit = suit;
@@ -43,49 +73,34 @@ export default class PlayingCard {
     return this._suit;
   }
 
+  get abbreviate() {
+    return {
+      rank: RANK_MAP[this.rank].abbreviation,
+      suit: this.suit === 'joker' ? '' : PlayingCard.unicode(this.suit),
+    };
+  }
+
+  get value() {
+    return RANK_MAP[this.rank].value;
+  }
+
   isFace() {
-    return [PlayingCard.JACK, PlayingCard.QUEEN, PlayingCard.KING].includes(
-      this.rank,
-    );
+    return ['jack', 'queen', 'king'].includes(this.rank);
   }
 
   isJoker() {
-    return this.rank === PlayingCard.JOKER;
+    return this.rank === 'joker';
   }
 
   isAce() {
-    return this.rank === PlayingCard.ACE;
+    return this.rank === 'ace';
   }
 
   toString() {
-    let value = this.rank.char;
-
-    if (!this.isJoker()) {
-      value += PlayingCard.unicode(this.suit);
-    }
-
-    return value;
+    return `${this.abbreviate.rank}${this.suit === 'joker' ? '' : this.abbreviate.suit}`;
   }
 
-  static readonly CLUBS = 'clubs';
-  static readonly HEARTS = 'hearts';
-  static readonly SPADES = 'spades';
-  static readonly DIAMONDS = 'diamonds';
-
-  static readonly ACE = { name: 'ace', char: 'A', value: 1 };
-  static readonly TWO = { name: 'two', char: '2', value: 2 };
-  static readonly THREE = { name: 'three', char: '3', value: 3 };
-  static readonly FOUR = { name: 'four', char: '4', value: 4 };
-  static readonly FIVE = { name: 'five', char: '5', value: 5 };
-  static readonly SIX = { name: 'six', char: '6', value: 6 };
-  static readonly SEVEN = { name: 'seven', char: '7', value: 7 };
-  static readonly EIGHT = { name: 'eight', char: '8', value: 8 };
-  static readonly NINE = { name: 'nine', char: '9', value: 9 };
-  static readonly TEN = { name: 'ten', char: '10', value: 10 };
-  static readonly JACK = { name: 'jack', char: 'J', value: 11 };
-  static readonly QUEEN = { name: 'queen', char: 'Q', value: 12 };
-  static readonly KING = { name: 'king', char: 'K', value: 13 };
-  static readonly JOKER = { name: 'joker', char: 'Jo', value: 14 };
+  static readonly RANKS = RANKS;
 
   static readonly unicode = function unicode(suit: Suit) {
     switch (suit) {

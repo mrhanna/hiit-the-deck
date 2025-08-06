@@ -1,24 +1,22 @@
 import PlayingCard from './PlayingCard';
-
 test('basic functionality', () => {
-  const threeClubs = new PlayingCard(PlayingCard.THREE, PlayingCard.CLUBS);
-  const kingHearts = new PlayingCard(PlayingCard.KING, PlayingCard.HEARTS);
-  const joker = new PlayingCard(PlayingCard.JOKER);
+  const threeClubs = new PlayingCard('three', 'clubs');
+  const kingHearts = new PlayingCard('king', 'hearts');
+  const joker = new PlayingCard('joker');
 
-  expect(threeClubs.rank.value).toBe(3);
-  expect(threeClubs.suit).toBe(PlayingCard.CLUBS);
+  expect(threeClubs.suit).toBe('clubs');
   expect(threeClubs.toString()).toBe('3\u2663');
 
   expect(kingHearts.isFace()).toBe(true);
   expect(threeClubs.isFace()).toBe(false);
 
-  threeClubs.rank = PlayingCard.QUEEN;
-  threeClubs.suit = PlayingCard.DIAMONDS;
+  threeClubs.rank = 'queen';
+  threeClubs.suit = 'diamonds';
 
-  expect(threeClubs.rank).toBe(PlayingCard.QUEEN);
+  expect(threeClubs.rank).toBe('queen');
   expect(threeClubs.toString()).toBe('Q\u2666');
 
-  expect(joker.rank).toBe(PlayingCard.JOKER);
+  expect(joker.rank).toBe('joker');
   expect(joker.toString()).toBe('Jo');
 });
 
