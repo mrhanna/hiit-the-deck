@@ -8,6 +8,6 @@ It is August 2025, and I want to resurrect the old codebase and turn it into a p
 
 I am starting with a fresh Expo project. The old state logic (Redux) should still be useable, so I will pull it into this new repo and rewrite it in TypeScript. My best bet is to just start over again with the UI and leverage Expo's new routing paradigm.
 
-- Rewrite existing game logic in TypeScript
+- ~~Rewrite existing game logic in TypeScript~~
 - Rewrite existing UI with modern libraries
 - ...?
