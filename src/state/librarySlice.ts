@@ -1,0 +1,48 @@
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import API from '../api/api';
+import { ExerciseLibrary } from '../common/Exercise';
+import { HIITDeckLibrary } from '../common/HIITDeck';
+
+interface LibraryState {
+  exercises: ExerciseLibrary;
+  decks: HIITDeckLibrary;
+  status: 'fetching' | 'idle' | 'error';
+  error?: string;
+}
+
+const initialState: LibraryState = {
+  exercises: {},
+  decks: {},
+  status: 'idle',
+  error: undefined,
+};
+
+export const fetchLibrary = createAsyncThunk('library/fetch', async () => {
+  const exercises = await API.fetchExercises();
+  const decks = await API.fetchDecks();
+
+  return { exercises, decks };
+});
+
+export const librarySlice = createSlice({
+  name: 'library',
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchLibrary.pending, (state) => {
+        state.status = 'fetching';
+      })
+      .addCase(fetchLibrary.fulfilled, (state, action) => {
+        state.status = 'idle';
+        state.exercises = action.payload.exercises;
+        state.decks = action.payload.decks;
+      })
+      .addCase(fetchLibrary.rejected, (state, action) => {
+        state.status = 'error';
+        state.error = action.error.message;
+      });
+  },
+});
+
+export default librarySlice.reducer;
