@@ -19,7 +19,7 @@ function createDifficulty(name: string, config: DifficultySuitMap): Difficulty {
   return { name, config };
 }
 
-export default {
+export const DEFAULT_DIFFICULTIES = {
   EASY: createDifficulty('Easy', createDifficultySuitMap(5, 10, 15, 20)),
   MEDIUM: createDifficulty('Medium', createDifficultySuitMap(15, 20, 25, 30)),
   HARD: createDifficulty('Hard', createDifficultySuitMap(20, 25, 30, 35)),
