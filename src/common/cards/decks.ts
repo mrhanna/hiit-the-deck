@@ -28,12 +28,12 @@ export function StandardDeck({
 
   suits.forEach((suit) => {
     ranks.forEach((rank) => {
-      deck.cards.push(new PlayingCard(rank, suit));
+      deck.push(new PlayingCard(rank, suit));
     });
   });
 
   for (let i = 0; i < jokers; i++) {
-    deck.cards.push(new PlayingCard('joker'));
+    deck.push(new PlayingCard('joker'));
   }
 
   return deck;

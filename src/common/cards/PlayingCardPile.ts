@@ -1,33 +1,28 @@
 import PlayingCard from './PlayingCard';
 
-export default class PlayingCardPile {
-  cards: PlayingCard[];
+export default class PlayingCardPile extends Array<PlayingCard> {
   onOverdraw: () => void;
 
-  constructor() {
-    this.cards = [];
+  constructor(...cards: PlayingCard[]) {
+    super(...cards);
     this.onOverdraw = () => {};
   }
 
-  get length() {
-    return this.cards.length;
-  }
-
   shuffle() {
-    for (let i = this.cards.length - 1; i > 0; i--) {
+    for (let i = this.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
-      const x = this.cards[i];
-      this.cards[i] = this.cards[j];
-      this.cards[j] = x;
+      const x = this[i];
+      this[i] = this[j];
+      this[j] = x;
     }
   }
 
-  sort({
+  sortDeck({
     aces = 'low',
     suitOrder = ['clubs', 'hearts', 'spades', 'diamonds'],
     jokers = 'last',
   } = {}) {
-    this.cards.sort((a, b) => {
+    this.sort((a, b) => {
       if (a.isJoker()) {
         return jokers === 'first' ? -1 : 1;
       }
@@ -56,20 +51,20 @@ export default class PlayingCardPile {
   }
 
   flip() {
-    this.cards.reverse();
+    this.reverse();
   }
 
   drawFrom(pile: PlayingCardPile, numberOfCards = 1) {
     for (let i = 0; i < numberOfCards; i++) {
-      if (pile.cards.length > 0) {
-        const newCard = pile.cards.shift()!; // definitely not undefined since length > 0
-        this.cards.push(newCard);
+      if (pile.length > 0) {
+        const newCard = pile.shift()!; // definitely not undefined since length > 0
+        this.push(newCard);
       } else {
         pile.onOverdraw();
 
-        if (pile.cards.length > 0) {
-          const newCard = pile.cards.shift()!;
-          this.cards.push(newCard);
+        if (pile.length > 0) {
+          const newCard = pile.shift()!;
+          this.push(newCard);
         } else return false;
       }
     }
@@ -78,8 +73,8 @@ export default class PlayingCardPile {
   }
 
   absorb(pile: PlayingCardPile) {
-    this.cards.push(...pile.cards);
-    pile.cards = [];
+    this.push(...pile);
+    pile.length = 0; // clear the pile
   }
 
   registerDiscardPile(
@@ -97,6 +92,6 @@ export default class PlayingCardPile {
   }
 
   toString() {
-    return this.cards.join(' ');
+    return this.join(' ');
   }
 }
