@@ -100,7 +100,8 @@ export default class PlayingCard {
     return `${this.abbreviate.rank}${this.suit === 'joker' ? '' : this.abbreviate.suit}`;
   }
 
-  static readonly unicode = function unicode(suit: Suit) {
+  static readonly abbreviate = (rank: Rank) => RANK_MAP[rank].abbreviation;
+  static readonly unicode = function unicode(suit: Suit | 'joker') {
     switch (suit) {
       case 'clubs':
         return '\u2663';
@@ -111,5 +112,7 @@ export default class PlayingCard {
       case 'diamonds':
         return '\u2666';
     }
+
+    return '';
   };
 }
