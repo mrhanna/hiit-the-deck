@@ -1,6 +1,6 @@
-export type Suit = 'clubs' | 'hearts' | 'spades' | 'diamonds' | 'joker';
+export type Suit = 'clubs' | 'hearts' | 'spades' | 'diamonds';
 
-const RANKS = [
+export const RANKS = [
   'ace',
   'two',
   'three',
@@ -38,7 +38,7 @@ const RANK_MAP: Record<Rank, { abbreviation: string; value: number }> = {
 
 export default class PlayingCard {
   private _rank: Rank;
-  private _suit: Suit;
+  private _suit: Suit | 'joker';
 
   constructor(rank: Rank, suit?: Suit) {
     if (!suit && rank !== 'joker') {
@@ -61,12 +61,12 @@ export default class PlayingCard {
     return this._rank;
   }
 
-  set suit(suit: Suit) {
-    if (this._rank === 'joker') {
-      this._suit = 'joker';
-    } else {
-      this._suit = suit;
+  set suit(suit: Suit | 'joker') {
+    if (this._rank !== 'joker' && suit === 'joker') {
+      throw new Error('Suit must not be joker if rank is not joker');
     }
+
+    this._suit = suit;
   }
 
   get suit() {
@@ -100,8 +100,6 @@ export default class PlayingCard {
     return `${this.abbreviate.rank}${this.suit === 'joker' ? '' : this.abbreviate.suit}`;
   }
 
-  static readonly RANKS = RANKS;
-
   static readonly unicode = function unicode(suit: Suit) {
     switch (suit) {
       case 'clubs':
@@ -113,7 +111,5 @@ export default class PlayingCard {
       case 'diamonds':
         return '\u2666';
     }
-
-    return '';
   };
 }
