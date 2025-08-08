@@ -14,7 +14,7 @@ export interface Exercise {
   per?: 'side';
   basis: 'time' | 'reps' | 'distance';
 
-  quantity: ExerciseQuantity | LocalizedQuantity;
+  quantity?: ExerciseQuantity | LocalizedQuantity;
 }
 
 export type Superset = {
