@@ -1,10 +1,12 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { StandardDeck } from '../common/cards/decks';
-import PlayingCard from '../common/cards/PlayingCard';
-import { DEFAULT_DIFFICULTIES, Difficulty } from '../common/Difficulty';
-import { ExerciseCard, HIITDeck } from '../common/HIITDeck';
+import type PlayingCard from '../common/cards/PlayingCard';
+import type { Difficulty } from '../common/Difficulty';
+import { DEFAULT_DIFFICULTIES } from '../common/Difficulty';
+import type { ExerciseCard, HIITDeck } from '../common/HIITDeck';
 import { fetchLibrary } from './librarySlice';
-import { RootState } from './store';
+import type { RootState } from './store';
 
 const cards = StandardDeck({ jokers: 2 });
 

@@ -1,7 +1,7 @@
 import { Text, View } from 'react-native';
 import PlayingCard from '../common/cards/PlayingCard';
-import { Exercise } from '../common/Exercise';
-import { ExerciseCard as ExerciseCardProps } from '../common/HIITDeck';
+import type { Exercise } from '../common/Exercise';
+import type { ExerciseCard as ExerciseCardProps } from '../common/HIITDeck';
 
 const ExerciseView = ({ exercise }: { exercise: Exercise }) => (
   <View>
@@ -20,7 +20,7 @@ export default function ExerciseCard({
 
   return (
     <View
-      className={`aspect-[0.7] grid place-items-center relative w-full ${cardColor}`}>
+      className={`relative grid aspect-[0.7] w-full place-items-center ${cardColor}`}>
       <View className="absolute left-0 top-0">
         <Text>
           {PlayingCard.abbreviate(rank)}
@@ -33,13 +33,13 @@ export default function ExerciseCard({
           {PlayingCard.unicode(suit)}
         </Text>
       </View>
-      <View className="absolute right-0 bottom-0">
+      <View className="absolute bottom-0 right-0">
         <Text>
           {PlayingCard.abbreviate(rank)}
           {PlayingCard.unicode(suit)}
         </Text>
       </View>
-      <View className="absolute left-0 bottom-0">
+      <View className="absolute bottom-0 left-0">
         <Text>
           {PlayingCard.abbreviate(rank)}
           {PlayingCard.unicode(suit)}

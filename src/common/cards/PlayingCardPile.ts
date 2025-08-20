@@ -1,4 +1,4 @@
-import PlayingCard from './PlayingCard';
+import type PlayingCard from './PlayingCard';
 
 export default class PlayingCardPile extends Array<PlayingCard> {
   onOverdraw: () => void;

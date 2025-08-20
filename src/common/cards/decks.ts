@@ -1,4 +1,5 @@
-import PlayingCard, { Rank, Suit } from './PlayingCard';
+import type { Rank, Suit } from './PlayingCard';
+import PlayingCard from './PlayingCard';
 import PlayingCardPile from './PlayingCardPile';
 
 export function StandardDeck({
