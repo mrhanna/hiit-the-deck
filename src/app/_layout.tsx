@@ -6,7 +6,7 @@ import { store } from '../state/store';
 export default function RootLayout() {
   return (
     <Provider store={store}>
-      <Stack />;
+      <Stack />
     </Provider>
   );
 }
