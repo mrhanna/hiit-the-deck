@@ -1,4 +1,4 @@
-import { ExerciseLibrary } from '@/src/common/Exercise';
+import { ExerciseLibrary } from '@/common/Exercise';
 
 const library: ExerciseLibrary = {
   '351w500sg680': {
