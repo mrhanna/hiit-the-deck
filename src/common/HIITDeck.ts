@@ -1,5 +1,5 @@
-import { Rank, Suit } from './cards/PlayingCard';
-import { Exercise, Superset } from './Exercise';
+import type { Rank, Suit } from './cards/PlayingCard';
+import type { Exercise, Superset } from './Exercise';
 
 export type RankMap = Record<Rank, Exercise | Superset>;
 

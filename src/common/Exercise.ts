@@ -1,4 +1,6 @@
-type Locale = 'us' | 'metric';
+const locales = ['us', 'metric'] as const;
+
+type Locale = (typeof locales)[number];
 
 interface ExerciseQuantity {
   multiplier?: number;
@@ -7,6 +9,12 @@ interface ExerciseQuantity {
 }
 
 type LocalizedQuantity = Record<Locale, ExerciseQuantity>;
+
+export const isLocalizedQuantity = (
+  quantity: ExerciseQuantity | LocalizedQuantity,
+): quantity is LocalizedQuantity => {
+  return (quantity as LocalizedQuantity)[locales[0]] !== undefined;
+};
 
 export interface Exercise {
   id: string;
