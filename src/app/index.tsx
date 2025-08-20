@@ -1,4 +1,4 @@
-import LaunchScreen from '../components/LaunchScreen/LaunchScreen';
+import LaunchScreen from '@/components/LaunchScreen/LaunchScreen';
 
 export default function Index() {
   return <LaunchScreen />;

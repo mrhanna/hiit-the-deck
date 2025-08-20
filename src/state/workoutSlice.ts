@@ -1,10 +1,10 @@
+import { StandardDeck } from '@/common/cards/decks';
+import type PlayingCard from '@/common/cards/PlayingCard';
+import type { Difficulty } from '@/common/Difficulty';
+import { DEFAULT_DIFFICULTIES } from '@/common/Difficulty';
+import type { ExerciseCard, HIITDeck } from '@/common/HIITDeck';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-import { StandardDeck } from '../common/cards/decks';
-import type PlayingCard from '../common/cards/PlayingCard';
-import type { Difficulty } from '../common/Difficulty';
-import { DEFAULT_DIFFICULTIES } from '../common/Difficulty';
-import type { ExerciseCard, HIITDeck } from '../common/HIITDeck';
 import { fetchLibrary } from './librarySlice';
 import type { RootState } from './store';
 

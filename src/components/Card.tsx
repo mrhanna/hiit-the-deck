@@ -1,7 +1,7 @@
+import PlayingCard from '@/common/cards/PlayingCard';
+import type { Exercise } from '@/common/Exercise';
+import type { ExerciseCard as ExerciseCardProps } from '@/common/HIITDeck';
 import { Text, View } from 'react-native';
-import PlayingCard from '../common/cards/PlayingCard';
-import type { Exercise } from '../common/Exercise';
-import type { ExerciseCard as ExerciseCardProps } from '../common/HIITDeck';
 
 const ExerciseView = ({ exercise }: { exercise: Exercise }) => (
   <View>

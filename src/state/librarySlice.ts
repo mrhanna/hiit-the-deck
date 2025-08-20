@@ -1,7 +1,7 @@
+import API from '@/api/api';
+import type { ExerciseLibrary } from '@/common/Exercise';
+import type { HIITDeckLibrary } from '@/common/HIITDeck';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import API from '../api/api';
-import type { ExerciseLibrary } from '../common/Exercise';
-import type { HIITDeckLibrary } from '../common/HIITDeck';
 
 interface LibraryState {
   exercises: ExerciseLibrary;

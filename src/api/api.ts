@@ -1,7 +1,7 @@
-import decks from '../../static/decks';
-import exercises from '../../static/exercises';
-import type { ExerciseLibrary } from '../common/Exercise';
-import type { HIITDeckLibrary } from '../common/HIITDeck';
+import type { ExerciseLibrary } from '@/common/Exercise';
+import type { HIITDeckLibrary } from '@/common/HIITDeck';
+import decks from '@assets/decks';
+import exercises from '@assets/exercises';
 
 export default {
   fetchDecks: async (): Promise<HIITDeckLibrary> => await decks,

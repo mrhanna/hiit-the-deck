@@ -1,4 +1,4 @@
-import { HIITDeckLibrary } from '@/src/common/HIITDeck';
+import { HIITDeckLibrary } from '@/common/HIITDeck';
 import exercises from './exercises';
 
 const decks: HIITDeckLibrary = {
