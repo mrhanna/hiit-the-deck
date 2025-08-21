@@ -4,7 +4,7 @@ import { KeyframeProps } from 'react-native-reanimated/lib/typescript/commonType
 const _out = {
   transform: [
     {
-      translateX: '150%',
+      translateX: 500,
     },
     {
       rotate: '75deg',

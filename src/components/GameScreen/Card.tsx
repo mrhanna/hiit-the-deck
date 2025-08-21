@@ -26,10 +26,7 @@ export default function ExerciseCard({
   ];
 
   return (
-    <View
-      className={
-        'shadow-corner relative flex aspect-[0.7] w-full items-center justify-center rounded-xl bg-white'
-      }>
+    <BlankCard>
       {cornerClasses.map((classes) => (
         <View className={`absolute ${classes}`} key={classes}>
           <Text
@@ -53,6 +50,14 @@ export default function ExerciseCard({
           ))}
         </View>
       )}
+    </BlankCard>
+  );
+}
+
+export function BlankCard({ children }: { children?: React.ReactNode }) {
+  return (
+    <View className="relative flex aspect-[0.7] w-full items-center justify-center rounded-xl bg-white shadow-corner">
+      {children}
     </View>
   );
 }

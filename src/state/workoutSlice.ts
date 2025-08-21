@@ -1,5 +1,5 @@
 import { StandardDeck } from '@/common/cards/decks';
-import type PlayingCard from '@/common/cards/PlayingCard';
+import type { Rank, Suit } from '@/common/cards/PlayingCard';
 import type { Difficulty } from '@/common/Difficulty';
 import { DEFAULT_DIFFICULTIES } from '@/common/Difficulty';
 import type { HIITDeck } from '@/common/HIITDeck';
@@ -12,12 +12,20 @@ const cards = StandardDeck({ jokers: 2 });
 
 function getShuffledDeck() {
   cards.shuffle();
-  return [...cards];
+  return [...cards].map((card) => ({
+    rank: card.rank,
+    suit: card.suit,
+  }));
 }
+
+export type PlainPlayingCard = {
+  rank: Rank;
+  suit: Suit | 'joker';
+};
 
 interface WorkoutState {
   position: number;
-  cards: PlayingCard[];
+  cards: PlainPlayingCard[];
   config: {
     deck?: HIITDeck;
     difficulty: Difficulty;

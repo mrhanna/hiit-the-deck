@@ -9,7 +9,7 @@ import {
 import { useRef } from 'react';
 import { Button, PanResponder, View } from 'react-native';
 import Animated, { FadeIn } from 'react-native-reanimated';
-import Card from './Card';
+import Card, { BlankCard } from './Card';
 import { slideIn, slideOut } from './GameScreenAnimations';
 import ProgressBar from './ProgressBar';
 
@@ -43,11 +43,9 @@ export default function GameScreen() {
       <ProgressBar value={position} max={totalCards} />
 
       <View className="m-4" {...panResponder.panHandlers}>
-        {lastThreeCards[0] && (
-          <View style={{ opacity: 0, position: 'relative' }}>
-            <Card {...lastThreeCards[0]} />
-          </View>
-        )}
+        <View style={{ opacity: 0, position: 'relative' }}>
+          <BlankCard />
+        </View>
         {lastThreeCards.map((card, index) => {
           return (
             card && (
@@ -56,9 +54,9 @@ export default function GameScreen() {
                 entering={index === 0 ? slideIn : FadeIn}
                 exiting={index === 0 ? slideOut : undefined}
                 style={{
-                  transformOrigin: 'bottom left',
-                  transitionProperty: ['transform'],
-                  transitionDuration: '200ms',
+                  // transformOrigin: 'bottom left',
+                  // transitionProperty: ['transform'],
+                  // transitionDuration: '200ms',
                   zIndex: 5 - index,
                   opacity: Math.min(1 / (index + 1) + 1, 1),
                   transform: [
@@ -70,7 +68,7 @@ export default function GameScreen() {
                     },
                   ],
                 }}
-                key={`${card.rank}-${card.suit}`}>
+                key={`${card.rank}-${card.suit}-${position - index}`}>
                 <Card {...card} />
               </Animated.View>
             )
