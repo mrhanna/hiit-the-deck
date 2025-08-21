@@ -67,9 +67,9 @@ export const workoutSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchLibrary.fulfilled, (state, action) => {
+    builder.addCase(fetchLibrary.fulfilled, (state, { payload }) => {
       if (!state.config.deck) {
-        state.config.deck = action.payload.decks[0];
+        state.config.deck = Object.values(payload.decks)[0];
       }
     });
   },
