@@ -5,7 +5,7 @@ import { Text, View } from 'react-native';
 
 const ExerciseView = ({ exercise }: { exercise: Exercise }) => (
   <View>
-    <Text>{exercise.name}</Text>
+    <Text className="text-3xl">{exercise.name}</Text>
   </View>
 );
 
@@ -15,36 +15,31 @@ export default function ExerciseCard({
   exercise,
 }: ExerciseCardProps) {
   const cardColor = ['diamonds', 'hearts'].includes(suit)
-    ? 'color-red-500'
+    ? 'color-red-700'
     : '';
+
+  const cornerClasses = [
+    'left-4 top-4',
+    'right-4 top-4',
+    'right-4 bottom-4 rotate-[180deg]',
+    'left-4 bottom-4 rotate-[180deg]',
+  ];
 
   return (
     <View
-      className={`relative grid aspect-[0.7] w-full place-items-center ${cardColor}`}>
-      <View className="absolute left-0 top-0">
-        <Text>
-          {PlayingCard.abbreviate(rank)}
-          {PlayingCard.unicode(suit)}
-        </Text>
-      </View>
-      <View className="absolute right-0 top-0">
-        <Text>
-          {PlayingCard.abbreviate(rank)}
-          {PlayingCard.unicode(suit)}
-        </Text>
-      </View>
-      <View className="absolute bottom-0 right-0">
-        <Text>
-          {PlayingCard.abbreviate(rank)}
-          {PlayingCard.unicode(suit)}
-        </Text>
-      </View>
-      <View className="absolute bottom-0 left-0">
-        <Text>
-          {PlayingCard.abbreviate(rank)}
-          {PlayingCard.unicode(suit)}
-        </Text>
-      </View>
+      className={
+        'shadow-corner relative flex aspect-[0.7] w-full items-center justify-center rounded-xl bg-white'
+      }>
+      {cornerClasses.map((classes) => (
+        <View className={`absolute ${classes}`} key={classes}>
+          <Text
+            className={`text-center text-3xl font-bold leading-[30px] ${cardColor}`}>
+            {PlayingCard.abbreviate(rank)}
+            {'\n'}
+            {PlayingCard.unicode(suit)}
+          </Text>
+        </View>
+      ))}
 
       {!('exercises' in exercise) ? (
         <View>

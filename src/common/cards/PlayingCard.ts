@@ -29,7 +29,7 @@ const RANK_MAP: Record<Rank, { abbreviation: string; value: number }> = {
   seven: { abbreviation: '7', value: 7 },
   eight: { abbreviation: '8', value: 8 },
   nine: { abbreviation: '9', value: 9 },
-  ten: { abbreviation: 'T', value: 10 },
+  ten: { abbreviation: '10', value: 10 },
   jack: { abbreviation: 'J', value: 11 },
   queen: { abbreviation: 'Q', value: 12 },
   king: { abbreviation: 'K', value: 13 },

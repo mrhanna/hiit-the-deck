@@ -7,7 +7,11 @@ module.exports = {
   ],
   presets: [require('nativewind/preset')],
   theme: {
-    extend: {},
+    extend: {
+      boxShadow: {
+        corner: '0 4px 8px rgba(0, 0, 0, 0.2)',
+      },
+    },
   },
   plugins: [],
 };
