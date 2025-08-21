@@ -6,14 +6,14 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 interface LibraryState {
   exercises: ExerciseLibrary;
   decks: HIITDeckLibrary;
-  status: 'fetching' | 'idle' | 'error';
+  status: 'uninitialized' | 'fetching' | 'idle' | 'error';
   error?: string;
 }
 
 const initialState: LibraryState = {
   exercises: {},
   decks: {},
-  status: 'idle',
+  status: 'uninitialized',
   error: undefined,
 };
 

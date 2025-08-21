@@ -2,9 +2,9 @@ import { StandardDeck } from '@/common/cards/decks';
 import type PlayingCard from '@/common/cards/PlayingCard';
 import type { Difficulty } from '@/common/Difficulty';
 import { DEFAULT_DIFFICULTIES } from '@/common/Difficulty';
-import type { ExerciseCard, HIITDeck } from '@/common/HIITDeck';
+import type { HIITDeck } from '@/common/HIITDeck';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { createSlice } from '@reduxjs/toolkit';
+import { createSelector, createSlice } from '@reduxjs/toolkit';
 import { fetchLibrary } from './librarySlice';
 import type { RootState } from './store';
 
@@ -75,40 +75,44 @@ export const workoutSlice = createSlice({
   },
 });
 
+export const selectAllCards = createSelector(
+  (state: RootState) => state.workout.cards,
+  (state: RootState) => state.workout.config.deck,
+  (cards, deck) => {
+    if (!deck) return null;
+
+    return cards.map((card) => {
+      const { rank, suit } = card;
+      return {
+        rank,
+        suit,
+        exercise: deck.map[rank],
+      };
+    });
+  },
+);
+
 export const selectPosition = (state: RootState) => state.workout.position;
-export const selectNumberOfCardsRemaining = (state: RootState) =>
-  state.workout.cards.length - state.workout.position - 1;
+export const selectNumberOfCards = (state: RootState) =>
+  state.workout.cards.length;
 
-export const selectCardAt =
-  (position: number) =>
-  (state: RootState): ExerciseCard | null => {
-    if (!state.workout.config.deck) throw Error('deck is undefined'); // should never happen
+export const selectNumberOfCardsRemaining = createSelector(
+  [selectPosition, selectNumberOfCards],
+  (position, length) => length - position - 1,
+);
+export const selectCardAt = (position: number) =>
+  createSelector(selectAllCards, (cards) => cards?.[position] ?? null);
 
-    const card = state.workout.cards[position];
+export const selectCurrentCard = createSelector(selectPosition, selectCardAt);
 
-    if (!card) return null;
+export const selectLastNCards = (n: number) =>
+  createSelector(selectAllCards, selectPosition, (cards, position) => {
+    const arr = Array.from({ length: n }, (_, i) => i);
 
-    const { rank, suit } = card;
-
-    return {
-      rank,
-      suit,
-      exercise: state.workout.config.deck.map[rank],
-    };
-  };
-
-export const selectAllCards = (state: RootState) => {
-  const allCards = [];
-
-  for (let i = 0; i < state.workout.cards.length; i++) {
-    allCards.push(selectCardAt(i)(state));
-  }
-
-  return allCards;
-};
-
-export const selectCurrentCard = (state: RootState) =>
-  selectCardAt(state.workout.position)(state);
+    return arr.map((i) =>
+      cards && position >= 0 ? cards[position - i] : null,
+    );
+  });
 
 export const {
   deckPicked,
