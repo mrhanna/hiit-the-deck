@@ -9,7 +9,7 @@ export default function LaunchScreen() {
       <View className="flex flex-1 items-center justify-center">
         <Image
           source={require('@assets/images/hiit.png')}
-          className="block h-24 w-64"
+          style={{ width: 256, height: 96 }}
           contentFit="contain"
           alt="HIIT"
         />

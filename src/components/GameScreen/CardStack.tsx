@@ -24,8 +24,6 @@ export default function CardStack() {
 
   const swipeHandlers = useStackSwipeHandlers();
 
-  console.log(`pos: ${position} lastPos: ${lastPosition}`);
-
   return (
     <View className="m-4" {...swipeHandlers}>
       {/* invisible card for spacing */}
