@@ -20,7 +20,9 @@ export default function LaunchScreen() {
         <Link href="/game" asChild>
           <LaunchScreenButton className="bg-gray-700" label="Start" />
         </Link>
-        <LaunchScreenButton label="Deck" />
+        <Link href="/decks" asChild>
+          <LaunchScreenButton label="Decks" />
+        </Link>
         <Link href="/difficulty" asChild>
           <LaunchScreenButton label="Difficulty" />
         </Link>

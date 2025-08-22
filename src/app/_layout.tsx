@@ -44,6 +44,12 @@ function LayoutContent() {
             presentation: 'modal',
           }}
         />
+        <Stack.Screen
+          name="decks"
+          options={{
+            presentation: 'modal',
+          }}
+        />
       </Stack>
     )
   );

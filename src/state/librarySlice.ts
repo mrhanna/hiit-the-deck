@@ -2,6 +2,7 @@ import API from '@/api/api';
 import type { ExerciseLibrary } from '@/common/Exercise';
 import type { HIITDeckLibrary } from '@/common/HIITDeck';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { RootState } from './store';
 
 interface LibraryState {
   exercises: ExerciseLibrary;
@@ -44,5 +45,7 @@ export const librarySlice = createSlice({
       });
   },
 });
+
+export const selectDecks = (state: RootState) => state.library.decks;
 
 export default librarySlice.reducer;
