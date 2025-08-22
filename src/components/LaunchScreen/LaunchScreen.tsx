@@ -6,8 +6,8 @@ import LaunchScreenButton from './LaunchScreenButton';
 
 export default function LaunchScreen() {
   return (
-    <View className="flex h-full items-center gap-8">
-      <View className="flex flex-1 items-center justify-center">
+    <View className="flex h-full items-center justify-evenly">
+      <View className="flex items-center justify-center">
         <Image
           source={require('@assets/images/hiit.png')}
           style={{ width: 256, height: 96 }}
@@ -16,12 +16,14 @@ export default function LaunchScreen() {
         />
         <Text className="text-3xl">the Deck</Text>
       </View>
-      <View className="flex w-full flex-1 flex-col justify-center gap-2 p-2">
+      <View className="flex w-full flex-col justify-center gap-2 p-2">
         <Link href="/game" asChild>
           <LaunchScreenButton className="bg-gray-700" label="Start" />
         </Link>
         <LaunchScreenButton label="Deck" />
-        <LaunchScreenButton label="Difficulty" />
+        <Link href="/difficulty" asChild>
+          <LaunchScreenButton label="Difficulty" />
+        </Link>
       </View>
     </View>
   );

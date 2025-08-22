@@ -15,6 +15,10 @@ export default function RootLayout() {
   );
 }
 
+export const unstable_settings = {
+  initialRouteName: 'index',
+};
+
 function LayoutContent() {
   const dispatch = useAppDispatch();
   const ready =
@@ -28,5 +32,19 @@ function LayoutContent() {
     dispatch(fetchLibrary());
   }, [dispatch]);
 
-  return ready && loaded && <Stack />;
+  return (
+    ready &&
+    loaded && (
+      <Stack>
+        <Stack.Screen name="index" />
+        <Stack.Screen name="game" />
+        <Stack.Screen
+          name="difficulty"
+          options={{
+            presentation: 'modal',
+          }}
+        />
+      </Stack>
+    )
+  );
 }

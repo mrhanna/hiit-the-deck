@@ -1,5 +1,5 @@
 import GameScreen from '@/components/GameScreen/GameScreen';
 
-export default function Index() {
+export default function GameRoute() {
   return <GameScreen />;
 }
