@@ -4,16 +4,20 @@ import { useAppDispatch, useAppSelector } from '@/state/hooks';
 import { selectDecks } from '@/state/librarySlice';
 import { deckPicked, selectConfig } from '@/state/workoutSlice';
 import { useRouter } from 'expo-router';
-import { Pressable, View } from 'react-native';
+import { GestureResponderEvent, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function DeckSelectScreen() {
   const currentDeckId = useAppSelector(selectConfig).deck?.id;
   const decks = useAppSelector(selectDecks);
+  const router = useRouter();
 
   return (
-    <View
-      className="h-full justify-center  p-6"
+    <Pressable
+      className="h-full p-6"
+      onPress={() => {
+        router.dismiss();
+      }}
       style={{
         backgroundColor: 'rgba(0, 0, 0, 0.8)',
       }}>
@@ -26,7 +30,7 @@ export default function DeckSelectScreen() {
           />
         ))}
       </SafeAreaView>
-    </View>
+    </Pressable>
   );
 }
 
@@ -46,9 +50,10 @@ function DeckOption({
       style={{
         transform: selected ? [{ scale: 1.05 }] : [{ scale: 1 }],
       }}
-      onPress={() => {
+      onPress={(event: GestureResponderEvent) => {
+        event.stopPropagation();
         dispatch(deckPicked(deck));
-        router.back();
+        router.dismiss();
       }}>
       <Text className="text-lg">{deck.name}</Text>
     </Pressable>

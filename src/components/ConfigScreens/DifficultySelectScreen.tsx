@@ -5,19 +5,23 @@ import { useAppDispatch, useAppSelector } from '@/state/hooks';
 import { difficultyPicked, selectConfig } from '@/state/workoutSlice';
 import { useRouter } from 'expo-router';
 import React from 'react';
-import { Pressable, View } from 'react-native';
+import { GestureResponderEvent, Pressable } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function DifficultySelectScreen() {
   const insets = useSafeAreaInsets();
   const currentDifficulty = useAppSelector(selectConfig).difficulty;
+  const router = useRouter();
 
   return (
-    <View
+    <Pressable
       className="flex h-full justify-end gap-6 p-6"
       style={{
-        paddingBottom: insets.bottom,
+        paddingBottom: insets.bottom + 24,
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      }}
+      onPress={() => {
+        router.dismiss();
       }}>
       {Object.values(DEFAULT_DIFFICULTIES).map((difficulty) => (
         <DifficultyOption
@@ -26,7 +30,7 @@ export default function DifficultySelectScreen() {
           selected={currentDifficulty.name === difficulty.name}
         />
       ))}
-    </View>
+    </Pressable>
   );
 }
 
@@ -48,9 +52,10 @@ function DifficultyOption({
       style={{
         transform: selected ? [{ scale: 1.05 }] : [{ scale: 1 }],
       }}
-      onPress={() => {
+      onPress={(event: GestureResponderEvent) => {
+        event.stopPropagation();
         dispatch(difficultyPicked(difficulty));
-        router.back();
+        router.dismiss();
       }}>
       <Text className="text-2xl">{difficulty.name}</Text>
       <Text className="text-lg">

@@ -41,16 +41,21 @@ function LayoutContent() {
       <Stack
         screenOptions={{
           contentStyle: {
-            backgroundColor: '#333',
+            // backgroundColor: '#333',
           },
         }}>
-        <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen
+          name="index"
+          options={{
+            headerShown: false,
+          }}
+        />
         <Stack.Screen name="game" />
         <Stack.Screen
           name="difficulty"
           options={{
-            presentation: 'transparentModal',
             headerShown: false,
+            presentation: 'transparentModal',
           }}
         />
         <Stack.Screen
