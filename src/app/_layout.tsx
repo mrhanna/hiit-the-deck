@@ -1,9 +1,9 @@
 import '@/global.css';
+import { JsStack as Stack } from '@/layout/JSStack';
 import { useAppDispatch, useAppSelector } from '@/state/hooks';
 import { fetchLibrary } from '@/state/librarySlice';
 import { RootState, store } from '@/state/store';
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
 import * as SystemUI from 'expo-system-ui';
 import { useEffect } from 'react';
 import { Provider } from 'react-redux';
@@ -38,23 +38,25 @@ function LayoutContent() {
   return (
     ready &&
     loaded && (
-      <Stack
-        screenOptions={{
-          contentStyle: {
-            // backgroundColor: '#333',
-          },
-        }}>
+      <Stack>
         <Stack.Screen
           name="index"
           options={{
             headerShown: false,
           }}
         />
-        <Stack.Screen name="game" />
+        <Stack.Screen
+          name="game"
+          options={{
+            headerShown: false,
+            animation: 'fade_from_bottom',
+          }}
+        />
         <Stack.Screen
           name="difficulty"
           options={{
             headerShown: false,
+            animation: 'fade_from_bottom',
             presentation: 'transparentModal',
           }}
         />
@@ -62,6 +64,7 @@ function LayoutContent() {
           name="decks"
           options={{
             presentation: 'transparentModal',
+            animation: 'fade_from_bottom',
             headerShown: false,
           }}
         />
