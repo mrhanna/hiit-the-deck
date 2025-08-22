@@ -1,11 +1,29 @@
 import PlayingCard from '@/common/cards/PlayingCard';
-import type { Exercise } from '@/common/Exercise';
+import { toQuantityString, type Exercise } from '@/common/Exercise';
 import type { ExerciseCard as ExerciseCardProps } from '@/common/HIITDeck';
+import { useAppSelector } from '@/state/hooks';
+import { selectBaseForSuit } from '@/state/workoutSlice';
 import { Text, View } from 'react-native';
+import Animated, { FadeIn } from 'react-native-reanimated';
 
-const ExerciseView = ({ exercise }: { exercise: Exercise }) => (
+const ExerciseView = ({
+  exercise,
+  base,
+}: {
+  exercise: Exercise;
+  base: number;
+}) => (
   <View>
-    <Text className="text-3xl">{exercise.name}</Text>
+    <Animated.Text
+      entering={FadeIn.delay(600).duration(300)}
+      className="mb-8 text-center text-3xl">
+      {exercise.name}
+    </Animated.Text>
+    <Animated.Text
+      entering={FadeIn.delay(1200).duration(300)}
+      className="text-center text-xl">
+      {toQuantityString(exercise, base)}
+    </Animated.Text>
   </View>
 );
 
@@ -25,6 +43,10 @@ export default function ExerciseCard({
     'left-4 bottom-4 rotate-[180deg]',
   ];
 
+  const base = useAppSelector(
+    selectBaseForSuit(suit === 'joker' ? 'hearts' : suit),
+  );
+
   return (
     <BlankCard>
       {cornerClasses.map((classes) => (
@@ -40,13 +62,13 @@ export default function ExerciseCard({
 
       {!('exercises' in exercise) ? (
         <View>
-          <ExerciseView exercise={exercise} />
+          <ExerciseView exercise={exercise} base={base} />
         </View>
       ) : (
         <View>
           <Text>Superset of</Text>
           {exercise.exercises.map((exercise, i) => (
-            <ExerciseView key={i} exercise={exercise} />
+            <ExerciseView key={i} exercise={exercise} base={base} />
           ))}
         </View>
       )}

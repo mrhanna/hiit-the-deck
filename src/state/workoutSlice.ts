@@ -2,6 +2,7 @@ import { StandardDeck } from '@/common/cards/decks';
 import type { Rank, Suit } from '@/common/cards/PlayingCard';
 import type { Difficulty } from '@/common/Difficulty';
 import { DEFAULT_DIFFICULTIES } from '@/common/Difficulty';
+import { isLocalizedQuantity, Locale } from '@/common/Exercise';
 import type { HIITDeck } from '@/common/HIITDeck';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSelector, createSlice } from '@reduxjs/toolkit';
@@ -29,6 +30,7 @@ interface WorkoutState {
   config: {
     deck?: HIITDeck;
     difficulty: Difficulty;
+    locale: Locale;
   };
 }
 
@@ -38,6 +40,7 @@ const initialState: WorkoutState = {
   config: {
     deck: undefined,
     difficulty: DEFAULT_DIFFICULTIES.EASY, // todo
+    locale: 'us',
   },
 };
 
@@ -83,18 +86,35 @@ export const workoutSlice = createSlice({
   },
 });
 
+export const selectConfig = (state: RootState) => state.workout.config;
+
+export const selectBaseForSuit = (suit: Suit) =>
+  createSelector(selectConfig, (config) => config.difficulty.config[suit] ?? 1);
+
 export const selectAllCards = createSelector(
   (state: RootState) => state.workout.cards,
-  (state: RootState) => state.workout.config.deck,
-  (cards, deck) => {
+  selectConfig,
+  (cards, { deck, locale }) => {
     if (!deck) return null;
 
     return cards.map((card) => {
       const { rank, suit } = card;
-      return {
+      const exerciseCard = {
         rank,
         suit,
         exercise: deck.map[rank],
+      };
+
+      const exercise = {
+        ...exerciseCard.exercise,
+        quantity: isLocalizedQuantity(exerciseCard.exercise.quantity)
+          ? exerciseCard.exercise.quantity[locale]
+          : exerciseCard.exercise.quantity,
+      };
+
+      return {
+        ...exerciseCard,
+        exercise,
       };
     });
   },
