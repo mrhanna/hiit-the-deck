@@ -8,11 +8,12 @@ interface ExerciseQuantity {
   fixed?: string | number;
 }
 
-export function toQuantityString(exercise: Exercise, base: number) {
-  const { quantity } = exercise;
+export function toQuantityString(exercise: Exercise | Superset, base: number) {
+  const ex = exercise as Exercise;
+  const { quantity } = ex;
   const value = `${quantity?.fixed ?? base * (quantity?.multiplier ?? 1)}`;
-  const unit = exercise.basis === 'reps' ? 'reps' : (quantity?.unit ?? '');
-  const per = exercise.per ? `per ${exercise.per}` : '';
+  const unit = ex.basis === 'reps' ? 'reps' : (quantity?.unit ?? '');
+  const per = ex.per ? `per ${ex.per}` : '';
 
   return [value, unit, per].filter(Boolean).join(' ');
 }

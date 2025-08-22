@@ -1,23 +1,25 @@
 import PlayingCard from '@/common/cards/PlayingCard';
-import { toQuantityString, type Exercise } from '@/common/Exercise';
+import { isSuperset, toQuantityString, type Exercise } from '@/common/Exercise';
 import type { ExerciseCard } from '@/common/HIITDeck';
 import { AnimatedText, Text } from '@/components/Text';
 import { useAppSelector } from '@/state/hooks';
 import { selectBaseForSuit } from '@/state/workoutSlice';
 import { View } from 'react-native';
-import { FadeIn } from 'react-native-reanimated';
+import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated';
 
 const ExerciseView = ({
   exercise,
   base,
+  condense,
 }: {
   exercise: Exercise;
   base: number;
+  condense?: boolean;
 }) => (
   <View>
     <AnimatedText
       entering={FadeIn.delay(600).duration(300)}
-      className="mb-8 text-center text-3xl">
+      className={`${condense ? 'mb-2 text-2xl' : 'mb-8 text-3xl'} text-center`}>
       {exercise.name}
     </AnimatedText>
     <AnimatedText
@@ -67,16 +69,30 @@ export default function ExerciseCard({
       ))}
 
       {showDescription &&
-        (!('exercises' in exercise) ? (
+        (!isSuperset(exercise) ? (
           <View>
             <ExerciseView exercise={exercise} base={base} />
           </View>
         ) : (
           <View>
             <Text>Superset of</Text>
-            {exercise.exercises.map((exercise, i) => (
-              <ExerciseView key={i} exercise={exercise} base={base} />
-            ))}
+            <Animated.View
+              entering={FadeInDown.duration(300)}
+              className="mb-8 mt-4 flex justify-center gap-8 border-l-2 pl-4">
+              {exercise.exercises.map((exercise, i) => (
+                <ExerciseView
+                  key={i}
+                  exercise={exercise}
+                  base={base}
+                  condense
+                />
+              ))}
+            </Animated.View>
+            <AnimatedText
+              entering={FadeIn.delay(1800).duration(300)}
+              className="text-3xl">
+              {toQuantityString(exercise, base)}
+            </AnimatedText>
           </View>
         ))}
     </BlankCard>
@@ -85,7 +101,7 @@ export default function ExerciseCard({
 
 export function BlankCard({ children }: { children?: React.ReactNode }) {
   return (
-    <View className="relative flex aspect-[0.7] w-full items-center justify-center rounded-xl bg-white shadow-corner">
+    <View className="relative flex aspect-[0.7] w-full items-center justify-center rounded-xl bg-white p-4 shadow-corner">
       {children}
     </View>
   );
