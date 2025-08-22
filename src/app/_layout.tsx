@@ -38,7 +38,13 @@ function LayoutContent() {
   return (
     ready &&
     loaded && (
-      <Stack>
+      <Stack
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: '#374151',
+          },
+          headerTintColor: '#ffffff',
+        }}>
         <Stack.Screen
           name="index"
           options={{
@@ -46,10 +52,11 @@ function LayoutContent() {
           }}
         />
         <Stack.Screen
-          name="game"
+          name="game/index"
           options={{
             headerShown: false,
             animation: 'fade_from_bottom',
+            headerTitle: '',
           }}
         />
         <Stack.Screen

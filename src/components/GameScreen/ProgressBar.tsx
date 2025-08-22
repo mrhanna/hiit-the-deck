@@ -28,8 +28,8 @@ export default function ProgressBar({
   }, [value]);
 
   return (
-    <View className="absolute left-0 top-0 h-2 w-full bg-gray-200">
-      <Animated.View className="h-full bg-blue-500" style={animatedStyle} />
+    <View className="absolute left-0 top-0 h-2 w-full bg-gray-700">
+      <Animated.View className="h-full bg-amber-900" style={animatedStyle} />
     </View>
   );
 }
