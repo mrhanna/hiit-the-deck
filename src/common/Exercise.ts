@@ -40,9 +40,20 @@ export type Exercise = UnquantifiedExercise & {
   quantity?: ExerciseQuantity;
 };
 
-export type Superset = {
+export type CatalogSuperset = {
   exercises: CatalogExercise[];
   quantity?: ExerciseQuantity;
+};
+
+export type Superset = {
+  exercises: Exercise[];
+  quantity?: ExerciseQuantity;
+};
+
+export const isSuperset = (
+  exercise?: CatalogExercise | CatalogSuperset,
+): exercise is CatalogSuperset => {
+  return (exercise as CatalogSuperset)?.exercises !== undefined;
 };
 
 export type ExerciseLibrary = Record<string, CatalogExercise>;

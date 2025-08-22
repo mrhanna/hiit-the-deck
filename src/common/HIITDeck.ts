@@ -1,7 +1,12 @@
 import type { Rank, Suit } from './cards/PlayingCard';
-import type { CatalogExercise, Exercise, Superset } from './Exercise';
+import type {
+  CatalogExercise,
+  CatalogSuperset,
+  Exercise,
+  Superset,
+} from './Exercise';
 
-export type RankMap = Record<Rank, CatalogExercise | Superset>;
+export type RankMap = Record<Rank, CatalogExercise | CatalogSuperset>;
 
 export interface HIITDeck {
   id: string;
