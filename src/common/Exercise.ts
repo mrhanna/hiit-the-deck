@@ -41,8 +41,8 @@ export type Exercise = UnquantifiedExercise & {
 };
 
 export type Superset = {
-  exercises: Exercise[];
+  exercises: CatalogExercise[];
   quantity?: ExerciseQuantity;
 };
 
-export type ExerciseLibrary = Record<string, Exercise>;
+export type ExerciseLibrary = Record<string, CatalogExercise>;
