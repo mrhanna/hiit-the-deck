@@ -25,7 +25,7 @@ export default function CardStack() {
   const swipeHandlers = useStackSwipeHandlers();
 
   return (
-    <View className="m-4" {...swipeHandlers}>
+    <View className="m-8" {...swipeHandlers}>
       {/* invisible card for spacing */}
       <View style={{ opacity: 0, position: 'relative' }}>
         <BlankCard />
@@ -103,22 +103,22 @@ function AnimatedStackCard({
 
       translateX.value = withTiming(0, {
         duration: 500,
-        easing: Easing.inOut(Easing.ease),
+        easing: Easing.out(Easing.poly(6)),
       });
 
       rotate.value = withTiming('0deg', {
         duration: 500,
-        easing: Easing.inOut(Easing.ease),
+        easing: Easing.out(Easing.poly(6)),
       });
     } else if (exit) {
       translateX.value = withTiming(OFFSET, {
         duration: 500,
-        easing: Easing.inOut(Easing.ease),
+        easing: Easing.in(Easing.cubic),
       });
 
       rotate.value = withTiming(ROTATION, {
         duration: 500,
-        easing: Easing.inOut(Easing.ease),
+        easing: Easing.in(Easing.cubic),
       });
     } else {
       const options = {

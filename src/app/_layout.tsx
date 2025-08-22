@@ -4,8 +4,11 @@ import { fetchLibrary } from '@/state/librarySlice';
 import { RootState, store } from '@/state/store';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
+import * as SystemUI from 'expo-system-ui';
 import { useEffect } from 'react';
 import { Provider } from 'react-redux';
+
+SystemUI.setBackgroundColorAsync('#1f2937');
 
 export default function RootLayout() {
   return (
@@ -35,7 +38,12 @@ function LayoutContent() {
   return (
     ready &&
     loaded && (
-      <Stack>
+      <Stack
+        screenOptions={{
+          contentStyle: {
+            backgroundColor: '#333',
+          },
+        }}>
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="game" />
         <Stack.Screen

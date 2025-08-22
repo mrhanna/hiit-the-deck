@@ -101,7 +101,7 @@ export default function ExerciseCard({
 
 export function BlankCard({ children }: { children?: React.ReactNode }) {
   return (
-    <View className="relative flex aspect-[0.7] w-full items-center justify-center rounded-xl bg-white p-4 shadow-corner">
+    <View className="relative flex aspect-[0.7] w-full items-center justify-center rounded-xl bg-[#f5f5e9] p-4 shadow-corner">
       {children}
     </View>
   );

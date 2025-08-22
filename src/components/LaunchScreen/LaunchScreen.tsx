@@ -17,7 +17,7 @@ export default function LaunchScreen() {
   });
 
   return (
-    <View className="h-full">
+    <View className="h-full bg-gray-800">
       <View className="absolute left-0 top-0 z-10 flex h-full w-full items-center justify-evenly p-4">
         <View className="items-left flex justify-center">
           <Image

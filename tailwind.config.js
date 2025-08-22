@@ -9,7 +9,7 @@ module.exports = {
   theme: {
     extend: {
       boxShadow: {
-        corner: '0 4px 8px rgba(0, 0, 0, 0.2)',
+        corner: '0 8px 8px rgba(0, 0, 0, 0.3)',
       },
       fontFamily: {
         sans: ['archivo-regular'],
