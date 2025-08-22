@@ -9,6 +9,7 @@ import {
   selectLastNCards,
   selectPosition,
 } from '@/state/workoutSlice';
+import { useRouter } from 'expo-router';
 import { useEffect } from 'react';
 import { View } from 'react-native';
 import Animated, {
@@ -24,10 +25,18 @@ export default function CardStack() {
   const lastPosition = useLastPosition();
   const lastCard = useAppSelector(selectCardAt(lastPosition));
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const swipeHandlers = useSwipeHandlers({
-    left: () => dispatch(nextCard()),
-    right: () => dispatch(previousCard()),
+    left: () => {
+      dispatch(nextCard());
+    },
+    right: () => {
+      dispatch(previousCard());
+    },
+    up: () => {
+      router.push('/game/showMove');
+    },
   });
 
   return (

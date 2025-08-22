@@ -61,7 +61,7 @@ function LayoutContent() {
         <Stack.Screen
           name="game/showMove"
           options={{
-            presentation: 'transparentModal',
+            presentation: 'modal',
             headerShown: false,
             animation: 'fade_from_bottom',
           }}
