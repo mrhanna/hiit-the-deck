@@ -35,7 +35,10 @@ function DeckOption({
 
   return (
     <Pressable
-      className={`${selected ? 'scale-105 bg-gray-300' : 'bg-gray-200'} p-4`}
+      className={`${selected ? ' bg-gray-300' : 'bg-gray-200'} p-4`}
+      style={{
+        transform: selected ? [{ scale: 1.05 }] : [{ scale: 1 }],
+      }}
       onPress={() => {
         dispatch(deckPicked(deck));
         router.back();

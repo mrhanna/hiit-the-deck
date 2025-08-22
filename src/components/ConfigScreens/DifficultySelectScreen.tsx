@@ -4,6 +4,7 @@ import { Text } from '@/components/Text';
 import { useAppDispatch, useAppSelector } from '@/state/hooks';
 import { difficultyPicked, selectConfig } from '@/state/workoutSlice';
 import { useRouter } from 'expo-router';
+import React from 'react';
 import { Pressable, View } from 'react-native';
 
 export default function DifficultySelectScreen() {
@@ -36,7 +37,10 @@ function DifficultyOption({
 
   return (
     <Pressable
-      className={`${selected ? 'scale-105 bg-gray-300' : 'bg-gray-200'} p-4`}
+      className={`${selected ? ' bg-gray-300' : 'bg-gray-200'} p-4`}
+      style={{
+        transform: selected ? [{ scale: 1.05 }] : [{ scale: 1 }],
+      }}
       onPress={() => {
         dispatch(difficultyPicked(difficulty));
         router.back();
@@ -44,14 +48,14 @@ function DifficultyOption({
       <Text className="text-lg">{difficulty.name}</Text>
       <Text className="text-lg">
         {suits.map((suit) => (
-          <>
+          <React.Fragment key={suit}>
             {['hearts', 'diamonds'].includes(suit) ? (
               <Text className="color-red-700">{PlayingCard.unicode(suit)}</Text>
             ) : (
               <>{PlayingCard.unicode(suit)}</>
             )}
             {difficulty.config[suit]}{' '}
-          </>
+          </React.Fragment>
         ))}
       </Text>
     </Pressable>
