@@ -1,6 +1,6 @@
 import PlayingCard from '@/common/cards/PlayingCard';
 import { toQuantityString, type Exercise } from '@/common/Exercise';
-import type { ExerciseCard as ExerciseCardProps } from '@/common/HIITDeck';
+import type { ExerciseCard } from '@/common/HIITDeck';
 import { useAppSelector } from '@/state/hooks';
 import { selectBaseForSuit } from '@/state/workoutSlice';
 import { Text, View } from 'react-native';
@@ -27,10 +27,15 @@ const ExerciseView = ({
   </View>
 );
 
+type ExerciseCardProps = ExerciseCard & {
+  showDescription?: boolean;
+};
+
 export default function ExerciseCard({
   rank,
   suit,
   exercise,
+  showDescription,
 }: ExerciseCardProps) {
   const cardColor = ['diamonds', 'hearts'].includes(suit)
     ? 'color-red-700'
@@ -60,18 +65,19 @@ export default function ExerciseCard({
         </View>
       ))}
 
-      {!('exercises' in exercise) ? (
-        <View>
-          <ExerciseView exercise={exercise} base={base} />
-        </View>
-      ) : (
-        <View>
-          <Text>Superset of</Text>
-          {exercise.exercises.map((exercise, i) => (
-            <ExerciseView key={i} exercise={exercise} base={base} />
-          ))}
-        </View>
-      )}
+      {showDescription &&
+        (!('exercises' in exercise) ? (
+          <View>
+            <ExerciseView exercise={exercise} base={base} />
+          </View>
+        ) : (
+          <View>
+            <Text>Superset of</Text>
+            {exercise.exercises.map((exercise, i) => (
+              <ExerciseView key={i} exercise={exercise} base={base} />
+            ))}
+          </View>
+        ))}
     </BlankCard>
   );
 }

@@ -38,6 +38,7 @@ export default function CardStack() {
           card={currentCard}
           stackIndex={0}
           enter={position > lastPosition}
+          showDescription
         />
       )}
 
@@ -56,7 +57,7 @@ export default function CardStack() {
         return (
           card && (
             <AnimatedStackCard
-              key={`${card.rank}-${card.suit}-${position - index}`}
+              key={`${card.rank}-${card.suit}-${position - index - 1}`}
               card={card}
               stackIndex={index + 1}
             />
@@ -75,11 +76,13 @@ function AnimatedStackCard({
   stackIndex,
   enter,
   exit,
+  showDescription = false,
 }: {
   card: ExerciseCard;
   stackIndex: number;
   enter?: boolean;
   exit?: boolean;
+  showDescription?: boolean;
 }) {
   const translateX = useSharedValue<number>(enter ? OFFSET : 0);
   const translateY = useSharedValue<number>(0);
@@ -134,7 +137,7 @@ function AnimatedStackCard({
         opacity: Math.min(1 / (stackIndex + 1) + 1, 1),
         ...animatedStyle,
       }}>
-      <Card {...card} />
+      <Card showDescription={showDescription && !exit} {...card} />
     </Animated.View>
   );
 }
