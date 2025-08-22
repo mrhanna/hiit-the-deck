@@ -1,6 +1,10 @@
 import { ExerciseCard } from '@/common/HIITDeck';
-import { useAppSelector } from '@/state/hooks';
+import useLastPosition from '@/components/hooks/useLastPosition';
+import { useSwipeHandlers } from '@/components/hooks/useSwipeHandlers';
+import { useAppDispatch, useAppSelector } from '@/state/hooks';
 import {
+  nextCard,
+  previousCard,
   selectCardAt,
   selectLastNCards,
   selectPosition,
@@ -13,16 +17,18 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import Card, { BlankCard } from './Card';
-import useLastPosition from './useLastPosition';
-import { useStackSwipeHandlers } from './useStackSwipeHandlers';
 
 export default function CardStack() {
   const [currentCard, ...otherCards] = useAppSelector(selectLastNCards(3));
   const position = useAppSelector(selectPosition);
   const lastPosition = useLastPosition();
   const lastCard = useAppSelector(selectCardAt(lastPosition));
+  const dispatch = useAppDispatch();
 
-  const swipeHandlers = useStackSwipeHandlers();
+  const swipeHandlers = useSwipeHandlers({
+    left: () => dispatch(nextCard()),
+    right: () => dispatch(previousCard()),
+  });
 
   return (
     <View className="m-8" {...swipeHandlers}>
