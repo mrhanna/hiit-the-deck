@@ -36,18 +36,20 @@ function LayoutContent() {
     ready &&
     loaded && (
       <Stack>
-        <Stack.Screen name="index" />
+        <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="game" />
         <Stack.Screen
           name="difficulty"
           options={{
-            presentation: 'modal',
+            presentation: 'transparentModal',
+            headerShown: false,
           }}
         />
         <Stack.Screen
           name="decks"
           options={{
-            presentation: 'modal',
+            presentation: 'transparentModal',
+            headerShown: false,
           }}
         />
       </Stack>

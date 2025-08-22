@@ -6,12 +6,19 @@ import { difficultyPicked, selectConfig } from '@/state/workoutSlice';
 import { useRouter } from 'expo-router';
 import React from 'react';
 import { Pressable, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function DifficultySelectScreen() {
+  const insets = useSafeAreaInsets();
   const currentDifficulty = useAppSelector(selectConfig).difficulty;
 
   return (
-    <View className="flex justify-center gap-6 p-6">
+    <View
+      className="flex h-full justify-end gap-6 p-6"
+      style={{
+        paddingBottom: insets.bottom,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      }}>
       {Object.values(DEFAULT_DIFFICULTIES).map((difficulty) => (
         <DifficultyOption
           key={difficulty.name}
@@ -37,7 +44,7 @@ function DifficultyOption({
 
   return (
     <Pressable
-      className={`${selected ? ' bg-gray-300' : 'bg-gray-200'} p-4`}
+      className={`${selected ? ' bg-gray-100' : 'bg-gray-300'} p-4`}
       style={{
         transform: selected ? [{ scale: 1.05 }] : [{ scale: 1 }],
       }}
@@ -45,7 +52,7 @@ function DifficultyOption({
         dispatch(difficultyPicked(difficulty));
         router.back();
       }}>
-      <Text className="text-lg">{difficulty.name}</Text>
+      <Text className="text-2xl">{difficulty.name}</Text>
       <Text className="text-lg">
         {suits.map((suit) => (
           <React.Fragment key={suit}>

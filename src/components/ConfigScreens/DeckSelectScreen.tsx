@@ -5,20 +5,27 @@ import { selectDecks } from '@/state/librarySlice';
 import { deckPicked, selectConfig } from '@/state/workoutSlice';
 import { useRouter } from 'expo-router';
 import { Pressable, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function DeckSelectScreen() {
   const currentDeckId = useAppSelector(selectConfig).deck?.id;
   const decks = useAppSelector(selectDecks);
 
   return (
-    <View className="flex justify-center gap-6 p-6">
-      {Object.values(decks).map((deck) => (
-        <DeckOption
-          key={deck.id}
-          deck={deck}
-          selected={currentDeckId === deck.id}
-        />
-      ))}
+    <View
+      className="h-full justify-center  p-6"
+      style={{
+        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+      }}>
+      <SafeAreaView className="flex gap-6">
+        {Object.values(decks).map((deck) => (
+          <DeckOption
+            key={deck.id}
+            deck={deck}
+            selected={currentDeckId === deck.id}
+          />
+        ))}
+      </SafeAreaView>
     </View>
   );
 }
@@ -35,7 +42,7 @@ function DeckOption({
 
   return (
     <Pressable
-      className={`${selected ? ' bg-gray-300' : 'bg-gray-200'} p-4`}
+      className={`${selected ? ' bg-gray-100' : 'bg-gray-300'} p-4`}
       style={{
         transform: selected ? [{ scale: 1.05 }] : [{ scale: 1 }],
       }}

@@ -1,31 +1,59 @@
 import { Text } from '@/components/Text';
+import { useAppSelector } from '@/state/hooks';
+import { selectConfig } from '@/state/workoutSlice';
 import { Image } from 'expo-image';
 import { Link } from 'expo-router';
+import { useVideoPlayer, VideoView } from 'expo-video';
 import { View } from 'react-native';
 import LaunchScreenButton from './LaunchScreenButton';
 
+const videoSource = require('@assets/bg.mp4');
+
 export default function LaunchScreen() {
+  const { difficulty, deck } = useAppSelector(selectConfig);
+  const player = useVideoPlayer(videoSource, (player) => {
+    player.loop = true;
+    player.play();
+  });
+
   return (
-    <View className="flex h-full items-center justify-evenly">
-      <View className="flex items-center justify-center">
-        <Image
-          source={require('@assets/images/hiit.png')}
-          style={{ width: 256, height: 96 }}
-          contentFit="contain"
-          alt="HIIT"
-        />
-        <Text className="text-3xl">the Deck</Text>
+    <View className="h-full">
+      <View className="absolute left-0 top-0 z-10 flex h-full w-full items-center justify-evenly p-4">
+        <View className="items-left flex justify-center">
+          <Image
+            source={require('@assets/images/hiit-w.png')}
+            style={{ width: 256, height: 70 }}
+            contentFit="contain"
+            alt="HIIT"
+          />
+          <Text className="text-3xl color-white">the Deck</Text>
+        </View>
+        <View className="flex w-full flex-col justify-center gap-6 p-8">
+          <Link href="/game" asChild>
+            <LaunchScreenButton className="bg-gray-600 p-8">
+              <Text className="text-3xl">{deck?.name}</Text>
+              {'\n'}
+              <Text className="text-lg">{difficulty.name}</Text>
+            </LaunchScreenButton>
+          </Link>
+          <Link href="/decks" asChild>
+            <LaunchScreenButton>Decks</LaunchScreenButton>
+          </Link>
+          <Link href="/difficulty" asChild>
+            <LaunchScreenButton>Difficulty</LaunchScreenButton>
+          </Link>
+        </View>
       </View>
-      <View className="flex w-full flex-col justify-center gap-2 p-2">
-        <Link href="/game" asChild>
-          <LaunchScreenButton className="bg-gray-700" label="Start" />
-        </Link>
-        <Link href="/decks" asChild>
-          <LaunchScreenButton label="Decks" />
-        </Link>
-        <Link href="/difficulty" asChild>
-          <LaunchScreenButton label="Difficulty" />
-        </Link>
+
+      <View className="absolute left-0 top-0 z-0 h-full w-full">
+        <VideoView
+          player={player}
+          nativeControls={false}
+          contentFit="cover"
+          style={{
+            height: '100%',
+          }}
+        />
       </View>
     </View>
   );
