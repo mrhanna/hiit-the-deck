@@ -2,7 +2,13 @@ import { StandardDeck } from '@/common/cards/decks';
 import type { Rank, Suit } from '@/common/cards/PlayingCard';
 import type { Difficulty } from '@/common/Difficulty';
 import { DEFAULT_DIFFICULTIES } from '@/common/Difficulty';
-import { isLocalizedQuantity, isSuperset, Locale } from '@/common/Exercise';
+import {
+  Exercise,
+  isLocalizedQuantity,
+  isSuperset,
+  Locale,
+  Superset,
+} from '@/common/Exercise';
 import type { HIITDeck } from '@/common/HIITDeck';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSelector, createSlice } from '@reduxjs/toolkit';
@@ -118,7 +124,7 @@ export const selectAllCards = createSelector(
         quantity: isLocalizedQuantity(exerciseCard.exercise.quantity)
           ? exerciseCard.exercise.quantity[locale]
           : exerciseCard.exercise.quantity,
-      };
+      } as Exercise | Superset;
 
       return {
         ...exerciseCard,
