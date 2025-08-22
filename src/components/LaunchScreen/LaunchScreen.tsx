@@ -1,6 +1,7 @@
+import { Text } from '@/components/Text';
 import { Image } from 'expo-image';
 import { Link } from 'expo-router';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import LaunchScreenButton from './LaunchScreenButton';
 
 export default function LaunchScreen() {

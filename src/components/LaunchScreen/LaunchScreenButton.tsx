@@ -1,4 +1,5 @@
-import { Pressable, Text } from 'react-native';
+import { Text } from '@/components/Text';
+import { Pressable } from 'react-native';
 
 export interface LaunchScreenButtonProps {
   onPress?: () => void;

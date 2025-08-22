@@ -1,10 +1,11 @@
 import PlayingCard from '@/common/cards/PlayingCard';
 import { toQuantityString, type Exercise } from '@/common/Exercise';
 import type { ExerciseCard } from '@/common/HIITDeck';
+import { AnimatedText, Text } from '@/components/Text';
 import { useAppSelector } from '@/state/hooks';
 import { selectBaseForSuit } from '@/state/workoutSlice';
-import { Text, View } from 'react-native';
-import Animated, { FadeIn } from 'react-native-reanimated';
+import { View } from 'react-native';
+import { FadeIn } from 'react-native-reanimated';
 
 const ExerciseView = ({
   exercise,
@@ -14,16 +15,16 @@ const ExerciseView = ({
   base: number;
 }) => (
   <View>
-    <Animated.Text
+    <AnimatedText
       entering={FadeIn.delay(600).duration(300)}
       className="mb-8 text-center text-3xl">
       {exercise.name}
-    </Animated.Text>
-    <Animated.Text
+    </AnimatedText>
+    <AnimatedText
       entering={FadeIn.delay(1200).duration(300)}
       className="text-center text-xl">
       {toQuantityString(exercise, base)}
-    </Animated.Text>
+    </AnimatedText>
   </View>
 );
 
