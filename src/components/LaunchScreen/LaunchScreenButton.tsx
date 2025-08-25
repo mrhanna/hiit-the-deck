@@ -15,7 +15,7 @@ export default function LaunchScreenButton({
 }: LaunchScreenButtonProps) {
   return (
     <Pressable
-      className={`rounded-sm py-4 pl-10  opacity-80 shadow-sm ${className ?? 'bg-gray-900'}`}
+      className={`rounded-sm py-4 pl-4 opacity-80 shadow-sm ${className ?? 'bg-gray-900'}`}
       onPress={onPress}>
       <Text className="text-left text-2xl leading-[20px] text-white">
         {children}

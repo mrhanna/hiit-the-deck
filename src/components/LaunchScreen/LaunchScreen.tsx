@@ -1,6 +1,6 @@
 import { Text } from '@/components/Text';
 import { useAppSelector } from '@/state/hooks';
-import { selectConfig } from '@/state/workoutSlice';
+import { selectConfig, selectPosition } from '@/state/workoutSlice';
 import { Image } from 'expo-image';
 import { Link } from 'expo-router';
 import { useVideoPlayer, VideoView } from 'expo-video';
@@ -11,8 +11,11 @@ const videoSource = require('@assets/bg.mp4');
 
 export default function LaunchScreen() {
   const { difficulty, deck } = useAppSelector(selectConfig);
+  const position = useAppSelector(selectPosition);
+
   const player = useVideoPlayer(videoSource, (player) => {
     player.loop = true;
+    console.log('play()');
     player.play();
   });
 
@@ -30,17 +33,25 @@ export default function LaunchScreen() {
         </View>
         <View className="flex w-full flex-col justify-center gap-6 p-8">
           <Link href="/game" asChild>
-            <LaunchScreenButton className="bg-gray-600 p-8">
-              <Text className="text-3xl">{deck?.name}</Text>
-              {'\n'}
-              <Text className="text-lg">{difficulty.name}</Text>
+            <LaunchScreenButton className="bg-gray-600">
+              <Text className="text-2xl">
+                {(position === -1 && 'Start') || 'Resume'} Workout
+              </Text>
             </LaunchScreenButton>
           </Link>
           <Link href="/decks" asChild>
-            <LaunchScreenButton>Decks</LaunchScreenButton>
+            <LaunchScreenButton>
+              <Text className="text-sm">Deck</Text>
+              {'\n'}
+              <Text className="text-lg">{deck?.name}</Text>
+            </LaunchScreenButton>
           </Link>
           <Link href="/difficulty" asChild>
-            <LaunchScreenButton>Difficulty</LaunchScreenButton>
+            <LaunchScreenButton>
+              <Text className="text-sm">Difficulty</Text>
+              {'\n'}
+              <Text className="text-lg">{difficulty.name}</Text>
+            </LaunchScreenButton>
           </Link>
         </View>
       </View>
