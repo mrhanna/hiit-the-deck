@@ -56,10 +56,12 @@ export const workoutSlice = createSlice({
   reducers: {
     deckPicked: (state, action: PayloadAction<HIITDeck>) => {
       state.config.deck = action.payload;
+      resetGame(state);
     },
 
     difficultyPicked: (state, action: PayloadAction<Difficulty>) => {
       state.config.difficulty = action.payload;
+      resetGame(state);
     },
 
     nextCard: (state) => {
@@ -79,8 +81,7 @@ export const workoutSlice = createSlice({
     },
 
     reset: (state) => {
-      state.position = -1;
-      state.cards = getShuffledDeck();
+      resetGame(state);
     },
   },
   extraReducers: (builder) => {
@@ -91,6 +92,11 @@ export const workoutSlice = createSlice({
     });
   },
 });
+
+function resetGame(state: ReturnType<typeof workoutSlice.reducer>) {
+  state.position = -1;
+  state.cards = getShuffledDeck();
+}
 
 export const selectConfig = (state: RootState) => state.workout.config;
 
