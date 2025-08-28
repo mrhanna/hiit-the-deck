@@ -1,6 +1,6 @@
 import { Text } from '@/components/Text';
 import { useAppSelector } from '@/state/hooks';
-import { selectConfig, selectPosition } from '@/state/workoutSlice';
+import { selectConfig, selectIsInProgress } from '@/state/workoutSlice';
 import { Image } from 'expo-image';
 import { Link } from 'expo-router';
 import { useVideoPlayer, VideoView } from 'expo-video';
@@ -11,7 +11,7 @@ const videoSource = require('@assets/bg.mp4');
 
 export default function LaunchScreen() {
   const { difficulty, deck } = useAppSelector(selectConfig);
-  const position = useAppSelector(selectPosition);
+  const isInProgress = useAppSelector(selectIsInProgress);
 
   const player = useVideoPlayer(videoSource, (player) => {
     player.loop = true;
@@ -35,7 +35,7 @@ export default function LaunchScreen() {
           <Link href="/game" asChild>
             <LaunchScreenButton className="bg-gray-600">
               <Text className="text-2xl">
-                {(position === -1 && 'Start') || 'Resume'} Workout
+                {!isInProgress ? 'Start' : 'Resume'} Workout
               </Text>
             </LaunchScreenButton>
           </Link>

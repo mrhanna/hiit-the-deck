@@ -32,6 +32,7 @@ export type PlainPlayingCard = {
 
 interface WorkoutState {
   position: number;
+  isInProgress: boolean;
   cards: PlainPlayingCard[];
   config: {
     deck?: HIITDeck;
@@ -43,6 +44,7 @@ interface WorkoutState {
 const initialState: WorkoutState = {
   position: -1,
   cards: getShuffledDeck(),
+  isInProgress: false,
   config: {
     deck: undefined,
     difficulty: DEFAULT_DIFFICULTIES.EASY, // todo
@@ -67,6 +69,7 @@ export const workoutSlice = createSlice({
     nextCard: (state) => {
       if (state.position < state.cards.length) {
         state.position += 1;
+        state.isInProgress = true;
       }
     },
 
@@ -78,6 +81,7 @@ export const workoutSlice = createSlice({
 
     positionChanged: (state, action: PayloadAction<number>) => {
       state.position = action.payload;
+      state.isInProgress = true;
     },
 
     reset: (state) => {
@@ -95,6 +99,7 @@ export const workoutSlice = createSlice({
 
 function resetGame(state: ReturnType<typeof workoutSlice.reducer>) {
   state.position = -1;
+  state.isInProgress = false;
   state.cards = getShuffledDeck();
 }
 
@@ -139,6 +144,9 @@ export const selectAllCards = createSelector(
     });
   },
 );
+
+export const selectIsInProgress = (state: RootState) =>
+  state.workout.isInProgress;
 
 export const selectPosition = (state: RootState) => state.workout.position;
 export const selectNumberOfCards = (state: RootState) =>
