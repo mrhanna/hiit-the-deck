@@ -1,15 +1,11 @@
 import { ExerciseCard } from '@/common/HIITDeck';
 import useLastPosition from '@/components/hooks/useLastPosition';
-import { useSwipeHandlers } from '@/components/hooks/useSwipeHandlers';
-import { useAppDispatch, useAppSelector } from '@/state/hooks';
+import { useAppSelector } from '@/state/hooks';
 import {
-  nextCard,
-  previousCard,
   selectCardAt,
   selectLastNCards,
   selectPosition,
 } from '@/state/workoutSlice';
-import { useRouter } from 'expo-router';
 import { useEffect } from 'react';
 import { View } from 'react-native';
 import Animated, {
@@ -24,23 +20,9 @@ export default function CardStack() {
   const position = useAppSelector(selectPosition);
   const lastPosition = useLastPosition();
   const lastCard = useAppSelector(selectCardAt(lastPosition));
-  const dispatch = useAppDispatch();
-  const router = useRouter();
-
-  const swipeHandlers = useSwipeHandlers({
-    left: () => {
-      dispatch(nextCard());
-    },
-    right: () => {
-      dispatch(previousCard());
-    },
-    up: () => {
-      router.push('/game/showMove');
-    },
-  });
 
   return (
-    <View className="m-8" {...swipeHandlers}>
+    <View className="m-8">
       {/* invisible card for spacing */}
       <View style={{ opacity: 0, position: 'relative' }}>
         <BlankCard />
