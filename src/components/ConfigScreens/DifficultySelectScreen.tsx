@@ -1,8 +1,13 @@
 import PlayingCard from '@/common/cards/PlayingCard';
 import { DEFAULT_DIFFICULTIES, Difficulty } from '@/common/Difficulty';
+import { useConfirm } from '@/components/hooks/useConfirm';
 import { Text } from '@/components/Text';
 import { useAppDispatch, useAppSelector } from '@/state/hooks';
-import { difficultyPicked, selectConfig } from '@/state/workoutSlice';
+import {
+  difficultyPicked,
+  selectConfig,
+  selectIsInProgress,
+} from '@/state/workoutSlice';
 import { useRouter } from 'expo-router';
 import React from 'react';
 import { GestureResponderEvent, Pressable } from 'react-native';
@@ -43,8 +48,27 @@ function DifficultyOption({
 }) {
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const isInProgress = useAppSelector(selectIsInProgress);
+  const { confirm } = useConfirm();
 
   const suits = ['hearts', 'diamonds', 'clubs', 'spades'] as const;
+
+  const handlePress = async (event: GestureResponderEvent) => {
+    event.stopPropagation();
+    if (
+      !isInProgress ||
+      (await confirm({
+        message:
+          'Changing the difficulty will reset your current workout. Continue?',
+        confirmText: 'Yes',
+        dismissText: 'No',
+      }))
+    ) {
+      dispatch(difficultyPicked(difficulty));
+    }
+
+    router.dismiss();
+  };
 
   return (
     <Pressable
@@ -52,11 +76,7 @@ function DifficultyOption({
       style={{
         transform: selected ? [{ scale: 1.05 }] : [{ scale: 1 }],
       }}
-      onPress={(event: GestureResponderEvent) => {
-        event.stopPropagation();
-        dispatch(difficultyPicked(difficulty));
-        router.dismiss();
-      }}>
+      onPress={handlePress}>
       <Text className="text-2xl">{difficulty.name}</Text>
       <Text className="text-lg">
         {suits.map((suit) => (

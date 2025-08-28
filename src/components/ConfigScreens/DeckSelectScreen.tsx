@@ -1,8 +1,13 @@
 import { HIITDeck } from '@/common/HIITDeck';
+import { useConfirm } from '@/components/hooks/useConfirm';
 import { Text } from '@/components/Text';
 import { useAppDispatch, useAppSelector } from '@/state/hooks';
 import { selectDecks } from '@/state/librarySlice';
-import { deckPicked, selectConfig } from '@/state/workoutSlice';
+import {
+  deckPicked,
+  selectConfig,
+  selectIsInProgress,
+} from '@/state/workoutSlice';
 import { useRouter } from 'expo-router';
 import { GestureResponderEvent, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -43,6 +48,24 @@ function DeckOption({
 }) {
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const isInProgress = useAppSelector(selectIsInProgress);
+  const { confirm } = useConfirm();
+
+  const handlePress = async (event: GestureResponderEvent) => {
+    event.stopPropagation();
+    if (
+      !isInProgress ||
+      (await confirm({
+        message: 'Changing the deck will reset your current workout. Continue?',
+        confirmText: 'Yes',
+        dismissText: 'No',
+      }))
+    ) {
+      dispatch(deckPicked(deck));
+    }
+
+    router.dismiss();
+  };
 
   return (
     <Pressable
@@ -50,11 +73,7 @@ function DeckOption({
       style={{
         transform: selected ? [{ scale: 1.05 }] : [{ scale: 1 }],
       }}
-      onPress={(event: GestureResponderEvent) => {
-        event.stopPropagation();
-        dispatch(deckPicked(deck));
-        router.dismiss();
-      }}>
+      onPress={handlePress}>
       <Text className="text-lg">{deck.name}</Text>
     </Pressable>
   );

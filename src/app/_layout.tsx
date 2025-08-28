@@ -1,3 +1,4 @@
+import { ConfirmProvider } from '@/components/hooks/useConfirm';
 import '@/global.css';
 import { JsStack as Stack } from '@/layout/JSStack';
 import { useAppDispatch, useAppSelector } from '@/state/hooks';
@@ -13,7 +14,9 @@ SystemUI.setBackgroundColorAsync('#1f2937');
 export default function RootLayout() {
   return (
     <Provider store={store}>
-      <LayoutContent />
+      <ConfirmProvider>
+        <LayoutContent />
+      </ConfirmProvider>
     </Provider>
   );
 }
