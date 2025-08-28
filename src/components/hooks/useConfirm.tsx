@@ -54,23 +54,23 @@ export function ConfirmProvider({ children }: { children: React.ReactNode }) {
             }}>
             <SafeAreaView className="m-6">
               <Pressable onPress={() => {}}>
-                <View className="rounded-md bg-white p-4">
+                <View className="rounded-md bg-white p-8">
                   <Text className="text-lg font-semibold">
                     {modalOptions.message}
                   </Text>
-                  <View className="mt-4 flex-row justify-end gap-2">
-                    <Button
-                      title={modalOptions.dismissText || 'Cancel'}
-                      color={'#d1d5db'}
-                      onPress={() => {
-                        handleClose(false);
-                      }}
-                    />
+                  <View className="mt-4 justify-end gap-2">
                     <Button
                       title={modalOptions.confirmText || 'OK'}
                       color={'#78350f'}
                       onPress={() => {
                         handleClose(true);
+                      }}
+                    />
+                    <Button
+                      title={modalOptions.dismissText || 'Cancel'}
+                      color={'#d1d5db'}
+                      onPress={() => {
+                        handleClose(false);
                       }}
                     />
                   </View>

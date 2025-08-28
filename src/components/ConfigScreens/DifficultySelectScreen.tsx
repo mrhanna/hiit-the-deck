@@ -68,7 +68,7 @@ function DifficultyOption({
       dispatch(difficultyPicked(difficulty));
     }
 
-    router.dismiss();
+    router.back();
   };
 
   return (
