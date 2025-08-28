@@ -10,8 +10,9 @@ import {
 } from '@/state/workoutSlice';
 import { useRouter } from 'expo-router';
 import React from 'react';
-import { GestureResponderEvent, Pressable } from 'react-native';
+import { GestureResponderEvent, Pressable, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import CloseButton from './CloseButton';
 
 export default function DifficultySelectScreen() {
   const insets = useSafeAreaInsets();
@@ -19,15 +20,15 @@ export default function DifficultySelectScreen() {
   const router = useRouter();
 
   return (
-    <Pressable
+    <View
       className="flex h-full justify-end gap-6 p-6"
       style={{
         paddingBottom: insets.bottom + 24,
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
-      }}
-      onPress={() => {
-        router.dismiss();
       }}>
+      <View className="items-center pb-4">
+        <CloseButton />
+      </View>
       {Object.values(DEFAULT_DIFFICULTIES).map((difficulty) => (
         <DifficultyOption
           key={difficulty.name}
@@ -35,7 +36,7 @@ export default function DifficultySelectScreen() {
           selected={currentDifficulty.name === difficulty.name}
         />
       ))}
-    </Pressable>
+    </View>
   );
 }
 
