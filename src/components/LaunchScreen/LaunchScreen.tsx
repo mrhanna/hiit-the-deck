@@ -1,15 +1,19 @@
 import { Text } from '@/components/Text';
-import { useAppSelector } from '@/state/hooks';
-import { selectConfig, selectIsInProgress } from '@/state/workoutSlice';
+import { useAppDispatch, useAppSelector } from '@/state/hooks';
+import { reset, selectConfig, selectIsInProgress } from '@/state/workoutSlice';
 import { Image } from 'expo-image';
-import { Link } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import { useVideoPlayer, VideoView } from 'expo-video';
 import { View } from 'react-native';
+import { useConfirm } from '../hooks/useConfirm';
 import LaunchScreenButton from './LaunchScreenButton';
 
 const videoSource = require('@assets/bg.mp4');
 
 export default function LaunchScreen() {
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+  const { confirm } = useConfirm();
   const { difficulty, deck } = useAppSelector(selectConfig);
   const isInProgress = useAppSelector(selectIsInProgress);
 
@@ -39,6 +43,24 @@ export default function LaunchScreen() {
               </Text>
             </LaunchScreenButton>
           </Link>
+          {isInProgress && (
+            <LaunchScreenButton
+              onPress={async () => {
+                if (
+                  await confirm({
+                    message:
+                      'Your current workout progress will be lost. Start a new workout?',
+                    confirmText: 'Yes',
+                    dismissText: 'No',
+                  })
+                ) {
+                  dispatch(reset());
+                  router.push('/game');
+                }
+              }}>
+              <Text className="text-2xl">New Workout</Text>
+            </LaunchScreenButton>
+          )}
           <Link href="/decks" asChild>
             <LaunchScreenButton>
               <Text className="text-sm">Deck</Text>
