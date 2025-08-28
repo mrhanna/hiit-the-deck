@@ -1,6 +1,6 @@
 import { Text } from '@/components/Text';
 import { createContext, useContext, useState } from 'react';
-import { Button, Modal, View } from 'react-native';
+import { Button, Modal, Pressable, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export interface ConfirmOptions {
@@ -43,32 +43,41 @@ export function ConfirmProvider({ children }: { children: React.ReactNode }) {
       {modalOptions && (
         <Modal
           transparent
-          animationType="slide"
+          animationType="fade"
           visible={isVisible}
           onRequestClose={() => handleClose(false)}>
-          <View
-            className="h-full w-full"
+          <Pressable
+            className="flex h-full w-full justify-center"
+            onPress={() => handleClose(false)}
             style={{
               backgroundColor: 'rgba(0, 0, 0, 0.8)',
             }}>
-            <SafeAreaView className="flex justify-center p-4">
-              <View className="rounded-md bg-white p-4">
-                <Text className="text-lg font-semibold">
-                  {modalOptions.message}
-                </Text>
-                <View className="mt-4 flex-row justify-end">
-                  <Button
-                    title={modalOptions.dismissText || 'Cancel'}
-                    onPress={() => handleClose(false)}
-                  />
-                  <Button
-                    title={modalOptions.confirmText || 'OK'}
-                    onPress={() => handleClose(true)}
-                  />
+            <SafeAreaView className="m-6">
+              <Pressable onPress={() => {}}>
+                <View className="rounded-md bg-white p-4">
+                  <Text className="text-lg font-semibold">
+                    {modalOptions.message}
+                  </Text>
+                  <View className="mt-4 flex-row justify-end gap-2">
+                    <Button
+                      title={modalOptions.dismissText || 'Cancel'}
+                      color={'#d1d5db'}
+                      onPress={() => {
+                        handleClose(false);
+                      }}
+                    />
+                    <Button
+                      title={modalOptions.confirmText || 'OK'}
+                      color={'#78350f'}
+                      onPress={() => {
+                        handleClose(true);
+                      }}
+                    />
+                  </View>
                 </View>
-              </View>
+              </Pressable>
             </SafeAreaView>
-          </View>
+          </Pressable>
         </Modal>
       )}
     </ConfirmContext.Provider>
