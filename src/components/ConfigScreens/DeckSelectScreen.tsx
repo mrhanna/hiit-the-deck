@@ -74,7 +74,7 @@ function DeckOption({
       dispatch(deckPicked(deck));
     }
 
-    router.dismiss();
+    router.back();
   };
 
   return (
